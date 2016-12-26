@@ -10,7 +10,6 @@ NEW_REPO_FAIL = "\nThis is not a valid id, please try again.\n"
 REPO_NOT_FOUND = "\nThere is no repository with this id, please try again.\n"
 REPOS_NOT_FOUND = "\nThere are no repositories with this criteria, please try again.\n"
 REPO_FOUND = "\nRepository found, details: \n"
-REPO_DELETED = "\nRepository deleted."
 
 
 def new_repo(repo_id, owner):
@@ -44,7 +43,7 @@ def delete_repo(repo_id):
     for repo in repoContainer:
         if repo.id == repo_id:
             repoContainer.remove(repo)
-            return REPO_DELETED
+            return "Repository <" + repo.id + "> deleted"
     else:
         return REPO_NOT_FOUND
 
