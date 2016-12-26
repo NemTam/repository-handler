@@ -23,7 +23,6 @@ def request_controller(request):
         return repoContainer.new_repo(id, owner)
 
     if request_type == DELETE_REPO:
-        # Parsing unicode parameter list
         repo_id = request.get("params")
         return repoContainer.delete_repo(repo_id)
 
