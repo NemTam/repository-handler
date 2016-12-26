@@ -29,7 +29,7 @@ def print_repos():
     return LIST_ALL_REPOS + response
 
 
-def get_single_repo(repo_id):
+def access_repo(repo_id):
     response = ""
     for repo in repoContainer:
         if repo.id == repo_id:

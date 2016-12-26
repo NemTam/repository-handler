@@ -5,7 +5,7 @@ REQUEST_TYPE = "requestType"
 PRINT_ALL = "print_all"
 NEW_REPO = "new_repo"
 DELETE_REPO = "delete_repo"
-GET_SINGLE_REPO = "get_singe_repo"
+ACCESS_REPO = "get_singe_repo"
 GET_MULTIPLE_ACCESSED_REPOS = "get_multiple_accessed_repos"
 
 
@@ -26,9 +26,9 @@ def request_controller(request):
         repo_id = request.get("params")
         return repoContainer.delete_repo(repo_id)
 
-    if request_type == GET_SINGLE_REPO:
+    if request_type == ACCESS_REPO:
         repo_id = request.get("params")
-        return repoContainer.get_single_repo(repo_id)
+        return repoContainer.access_repo(repo_id)
 
     if request_type == GET_MULTIPLE_ACCESSED_REPOS:
         value = int(request.get("params"))
