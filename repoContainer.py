@@ -3,13 +3,13 @@ from myRepo import Repo
 repoContainer = []
 idList = []
 
+REPO_FOUND = "\nRepository accessed, details: \n"
 LIST_ALL_REPOS = "<id>  <owner>  <date>\n"
 LIST_ONE_REPO = "\n<id>  <owner>  <date>  <access counter>\n"
 NEW_REPO_DONE = "\nNew repo created, details: \n"
 NEW_REPO_FAIL = "\nThis is not a valid id, please try again.\n"
 REPO_NOT_FOUND = "\nThere is no repository with this id, please try again.\n"
 REPOS_NOT_FOUND = "\nThere are no repositories with this criteria, please try again.\n"
-REPO_FOUND = "\nRepository found, details: \n"
 
 
 def new_repo(repo_id, owner):
