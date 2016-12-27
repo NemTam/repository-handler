@@ -59,7 +59,7 @@ def get_repos_access_count(value):
         return REPOS_NOT_FOUND
 
 
-# ToDelete
+# Initialization
 new_repo("12345", "Tamas")
 new_repo("54321", "John")
-new_repo("1234", "Nadal")
+new_repo("1234", "Peter")
