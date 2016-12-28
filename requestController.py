@@ -1,5 +1,7 @@
-import repoContainer
+import repoHandlerFunctions
 import ast
+from containerHandler import container_init
+import pickle
 
 REQUEST_TYPE = "requestType"
 PRINT_ALL = "print_all"
@@ -9,27 +11,46 @@ ACCESS_REPO = "get_singe_repo"
 GET_MULTIPLE_ACCESSED_REPOS = "get_multiple_accessed_repos"
 
 
-def request_controller(request):
+def request_parser(request, repo_container, id_container):
     request_type = request.get(REQUEST_TYPE)
-
     if request_type == PRINT_ALL:
-        return repoContainer.print_repos()
+        return repoHandlerFunctions.print_repos(repo_container)
 
-    if request_type == NEW_REPO:
+    elif request_type == NEW_REPO:
         # Parsing unicode parameter list
         params = ast.literal_eval(request.get("params"))
         id = params[0]
         owner = params[1]
-        return repoContainer.new_repo(id, owner)
+        return repoHandlerFunctions.new_repo(repo_container, id_container, id, owner)
 
-    if request_type == DELETE_REPO:
+    elif request_type == ACCESS_REPO:
         repo_id = request.get("params")
-        return repoContainer.delete_repo(repo_id)
+        return repoHandlerFunctions.access_repo(repo_container, repo_id)
 
-    if request_type == ACCESS_REPO:
+    elif request_type == DELETE_REPO:
         repo_id = request.get("params")
-        return repoContainer.access_repo(repo_id)
+        return repoHandlerFunctions.delete_repo(repo_container, repo_id)
 
-    if request_type == GET_MULTIPLE_ACCESSED_REPOS:
+    elif request_type == GET_MULTIPLE_ACCESSED_REPOS:
         value = int(request.get("params"))
-        return repoContainer.get_repos_access_count(value)
+        return repoHandlerFunctions.get_repos_access_count(repo_container, value)
+
+
+def request_controller(request):
+    container_key = container_init()
+    # loading the repository container
+    container = container_key.get()
+
+    # object deserialization
+    repo_container = pickle.loads(container.repo_list_db)
+    id_container = pickle.loads(container.id_list_db)
+
+    response = request_parser(request, repo_container, id_container)
+
+    # container serialization
+    container.repo_list_db = pickle.dumps(repo_container)
+    container.id_list_db = pickle.dumps(id_container)
+
+    # storing the data container
+    container.put()
+    return response
